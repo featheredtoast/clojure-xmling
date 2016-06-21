@@ -18,8 +18,10 @@
             (recur (zip/next new-loc))))
         (recur (zip/next loc))))))
 
-(defn search-sources
-  [loc] (let [tag (:tag (zip/node loc))] (= tag (javax.xml.namespace.QName. "urn:oasis:names:tc:xliff:document:1.2" "source"))))
+(defn search-by-tag
+  [namespace name]
+  (fn [loc]
+    (let [tag (:tag (zip/node loc))] (= tag (javax.xml.namespace.QName. namespace name)))))
 
 (defn edit-sources
   [loc]
@@ -41,7 +43,7 @@
       root (zip/xml-zip (xml/parse input))
       edited-sources (tree-edit
                       root
-                      search-sources
+                      (search-by-tag "urn:oasis:names:tc:xliff:document:1.2" "source")
                       edit-sources)
       new-root edited-sources]
   (println (xml/indent-str edited-sources))
