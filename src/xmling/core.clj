@@ -19,12 +19,16 @@
   (zip/edit source #(assoc-in % [:content] (str "edited..." (zip-xml/text source)))))
 (defn read-xliff
   "Reads xliff!"
-  []
-  (let [input (clojure.java.io/reader (clojure.java.io/resource "test.xliff"))
+  [file]
+  (let [input (clojure.java.io/reader (clojure.java.io/resource file))
         root (zip/xml-zip (xml/parse input))
         sources (get-all-sources root)
         edited-source (edit-source (first sources))
         new-root (zip/root edited-source)]
     new-root))
 
-(xml/emit-str (read-xliff))
+;; note this forgets its root namespace. xmlns is not present in the output...
+(xml/emit-str (read-xliff "test.xliff"))
+;; this fails, despite only adding namespaces to xml:lang
+;; (xml/emit-str (read-xliff "test.xliff"))
+
