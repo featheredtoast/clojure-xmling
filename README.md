@@ -1,14 +1,9 @@
 # xmling
 
-A Clojure library designed to ... well, that part is up to you.
-
-## Usage
-
-FIXME
+An attempt to see what it's like to parse an xml document in clojure
 
 ## License
 
-Copyright © 2016 FIXME
+Copyright © 2016
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Distributed under the Eclipse Public License version 1.0
