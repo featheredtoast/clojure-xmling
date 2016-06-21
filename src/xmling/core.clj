@@ -21,11 +21,19 @@
 (defn search-by-tag
   [namespace name]
   (fn [loc]
-    (let [tag (:tag (zip/node loc))] (= tag (javax.xml.namespace.QName. namespace name)))))
+    (let [tag (:tag (zip/node loc))]
+      (= tag (javax.xml.namespace.QName. namespace name)))))
+
+(defn search-by-tag-local
+  [name]
+  (fn [loc]
+    (when-let [tag (:tag (zip/node loc))]
+      (= (.getLocalPart tag) name))))
 
 (defn edit-sources
   [loc]
-  (let [old-content (first (:content loc))] ;;this isn't perfect but it works...
+  (println loc)
+  (let [old-content (zip-xml/text (zip/xml-zip loc))] ;;this isn't perfect but it works. It strips out all tags, however.
     (println old-content)
     (assoc-in loc [:content] (str "edited..." old-content))))
 
@@ -35,7 +43,7 @@
   [tagname]
   (fn [loc]
     (when-let [node-tag (:tag (zip/node loc))]
-      (or (= tagname (.getLocalPart (:tag (zip/node loc))))
+      (or (= tagname (.getLocalPart node-tag))
           (filter #(and (zip/branch? %) (= tagname (.getLocalPart (:tag (zip/node %)))))
                   (clojure.data.zip/children-auto loc))))))
 
@@ -43,7 +51,7 @@
       root (zip/xml-zip (xml/parse input))
       edited-sources (tree-edit
                       root
-                      (search-by-tag "urn:oasis:names:tc:xliff:document:1.2" "source")
+                      (search-by-tag-local "source")
                       edit-sources)
       new-root edited-sources]
   (println (xml/indent-str edited-sources))

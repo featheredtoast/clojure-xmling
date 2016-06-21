@@ -19,7 +19,7 @@
   </header>
   <body>
    <trans-unit id="1" maxbytes="14">
-    <source xml:lang="EN-US">Quetzal</source>
+    <source xml:lang="EN-US">Quetzal<x/> doing it</source>
     <target xml:lang="JA-JP">Quetzal</target>
    </trans-unit>
    <trans-unit id="3" maxbytes="114">
