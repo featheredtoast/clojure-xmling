@@ -17,6 +17,17 @@
   "do some edits!"
   [source]
   (zip/edit source #(assoc-in % [:content] (str "edited..." (zip-xml/text source)))))
+
+(defn ns-tag=
+  "Returns a query predicate that matches a node when its is a tag
+  named tagname. Works against qname'd tags that were introduced in data.xml 0.1.0-beta"
+  [tagname]
+  (fn [loc]
+    (when-let [node-tag (:tag (zip/node loc))]
+      (or (= tagname (.getLocalPart (:tag (zip/node loc))))
+          (filter #(and (zip/branch? %) (= tagname (.getLocalPart (:tag (zip/node %)))))
+                  (clojure.data.zip/children-auto loc))))))
+
 (defn read-xliff
   "Reads xliff!"
   [file]
@@ -39,9 +50,6 @@
       xmlns (xml/find-xmlns root)
       source (zip-xml/xml1-> root
                              clojure.data.zip/descendants
-                            (zip-xml/attr= :lang "EN-US"))
-      is-test (= "source" (.getLocalPart (:tag (first source))))
-      edited-source (edit-source source)
-      new-root (zip/root edited-source)]
-  (println (xml/indent-str new-root))
-    is-test)
+                             (ns-tag= "source"))]
+  (println (:content (zip/node source)))
+  true)
