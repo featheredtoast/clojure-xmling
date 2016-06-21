@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xliff version="1.1">
+<xliff version="1.1" xmlns="urn:oasis:names:tc:xliff:document:1.2">
  <file original="Graphic Example.psd"
   source-language="EN-US" target-language="JA-JP"
   tool="Rainbow" datatype="photoshop">
@@ -19,18 +19,18 @@
   </header>
   <body>
    <trans-unit id="1" maxbytes="14">
-    <source xml:lang="EN-US">Quetzal</source>
-    <target xml:lang="JA-JP">Quetzal</target>
+    <source lang="EN-US">Quetzal</source>
+    <target lang="JA-JP">Quetzal</target>
    </trans-unit>
    <trans-unit id="3" maxbytes="114">
-    <source xml:lang="EN-US">An application to manipulate and 
+    <source lang="EN-US">An application to manipulate and 
      process XLIFF documents</source>
-    <target xml:lang="JA-JP">XLIFF 文書を編集、または処理
+    <target lang="JA-JP">XLIFF 文書を編集、または処理
      するアプリケーションです。</target>
    </trans-unit>
    <trans-unit id="4" maxbytes="36">
-    <source xml:lang="EN-US">XLIFF Data Manager</source>
-    <target xml:lang="JA-JP">XLIFF データ・マネージャ</target>
+    <source lang="EN-US">XLIFF Data Manager</source>
+    <target lang="JA-JP">XLIFF データ・マネージャ</target>
    </trans-unit>
   </body>
  </file>
