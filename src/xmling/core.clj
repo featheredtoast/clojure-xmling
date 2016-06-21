@@ -50,6 +50,8 @@
       xmlns (xml/find-xmlns root)
       source (zip-xml/xml1-> root
                              clojure.data.zip/descendants
-                             (ns-tag= "source"))]
-  (println (:content (zip/node source)))
+                             (ns-tag= "source"))
+      edited-source (edit-source source)
+      new-root (zip/root edited-source)]
+  (println (xml/indent-str new-root))
   true)
