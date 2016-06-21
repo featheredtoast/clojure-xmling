@@ -29,6 +29,7 @@
 
 ;; note this forgets its root namespace. xmlns is not present in the output...
 (xml/emit-str (read-xliff "test.xliff"))
-;; this fails, despite only adding namespaces to xml:lang
-;; (xml/emit-str (read-xliff "test.xliff"))
+;; emit-str would fail for this, despite only adding namespaces to xml:lang
+(read-xliff "test-bad.xliff")
+
 
