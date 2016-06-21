@@ -10,7 +10,7 @@ inspired by [this post](http://clojure-doc.org/articles/tutorials/parsing_xml_wi
 
 At first glance, it looks and feels as good as a linq query. However, I am having trouble with namespaces.
 
-Diving into the [tickets](http://dev.clojure.org/jira/secure/IssueNavigator.jspa?reset=true&jqlQuery=project+%3D+DXML+AND+%28summary+~+xmlns+OR+description+~+xmlns%29+ORDER+BY+status+DESC%2C+priority+DESC) it appears that namespaces still are not well supported.
+Namespace issues come about because between data.xml v 0.0.8 and 0.1.0, :node changes from a string to a [qname](http://docs.oracle.com/javase/7/docs/api/javax/xml/namespace/QName.html). This complicates finding nodes
 
 ## License
 

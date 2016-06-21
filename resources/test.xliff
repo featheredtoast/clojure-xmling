@@ -19,18 +19,18 @@
   </header>
   <body>
    <trans-unit id="1" maxbytes="14">
-    <source lang="EN-US">Quetzal</source>
-    <target lang="JA-JP">Quetzal</target>
+    <source xml:lang="EN-US">Quetzal</source>
+    <target xml:lang="JA-JP">Quetzal</target>
    </trans-unit>
    <trans-unit id="3" maxbytes="114">
-    <source lang="EN-US">An application to manipulate and 
+    <source xml:lang="EN-US">An application to manipulate and 
      process XLIFF documents</source>
-    <target lang="JA-JP">XLIFF 文書を編集、または処理
+    <target xml:lang="JA-JP">XLIFF 文書を編集、または処理
      するアプリケーションです。</target>
    </trans-unit>
    <trans-unit id="4" maxbytes="36">
-    <source lang="EN-US">XLIFF Data Manager</source>
-    <target lang="JA-JP">XLIFF データ・マネージャ</target>
+    <source xml:lang="EN-US">XLIFF Data Manager</source>
+    <target xml:lang="JA-JP">XLIFF データ・マネージャ</target>
    </trans-unit>
   </body>
  </file>
