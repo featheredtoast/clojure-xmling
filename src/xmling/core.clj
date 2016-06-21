@@ -3,11 +3,6 @@
             [clojure.zip :as zip]
             [clojure.data.zip.xml :as zip-xml]))
 
-(defn edit-source
-  "do some edits! returns the changed root"
-  [source]
-  (zip/edit source #(assoc-in % [:content] (str "edited..." (zip-xml/text source)))))
-
 (defn tree-edit
   "Take a zipper, a function that matches a pattern in the tree,
    and a function that edits the current location in the tree.  Examine the tree
@@ -23,6 +18,15 @@
             (recur (zip/next new-loc))))
         (recur (zip/next loc))))))
 
+(defn search-sources
+  [loc] (let [tag (:tag (zip/node loc))] (= tag (javax.xml.namespace.QName. "urn:oasis:names:tc:xliff:document:1.2" "source"))))
+
+(defn edit-sources
+  [loc]
+  (let [old-content (first (:content loc))] ;;this isn't perfect but it works...
+    (println old-content)
+    (assoc-in loc [:content] (str "edited..." old-content))))
+
 (defn ns-tag=
   "Returns a query predicate that matches a node when its is a tag
   named tagname. Works against qname'd tags that were introduced in data.xml 0.1.0-beta"
@@ -37,11 +41,8 @@
       root (zip/xml-zip (xml/parse input))
       edited-sources (tree-edit
                       root
-                      (fn [loc] (let [tag (:tag (zip/node loc))] (= tag (javax.xml.namespace.QName. "urn:oasis:names:tc:xliff:document:1.2" "source"))))
-                      (fn [loc]
-                        (let [old-content (first (:content loc))] ;;this isn't perfect but it works...
-                          (println old-content)
-                          (assoc-in loc [:content] (str "edited..." old-content)))))
+                      search-sources
+                      edit-sources)
       new-root edited-sources]
   (println (xml/indent-str edited-sources))
   true)
