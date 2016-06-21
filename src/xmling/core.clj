@@ -13,23 +13,17 @@
   (zip-xml/xml-> xml-root
                  clojure.data.zip/descendants
                  :source))
-(defn ns-tag=
-  [tag]
-  (fn [loc]
-    true
-    #_(= tag (xml/qname-local (:tag loc)))))
 (defn edit-source
   "do some edits!"
   [source]
-  (println source)
-  #_(zip/edit source #(assoc-in % [:content] (str "edited..." (zip-xml/text source)))))
+  (zip/edit source #(assoc-in % [:content] (str "edited..." (zip-xml/text source)))))
 (defn read-xliff
   "Reads xliff!"
   [file]
   (let [input (clojure.java.io/reader (clojure.java.io/resource file))
         root (zip/xml-zip (xml/parse input))
         xmlns (xml/find-xmlns root)
-        source (zip-xml/xml1-> root clojure.data.zip/descendants (ns-tag= "source"))
+        source (zip-xml/xml1-> root clojure.data.zip/descendants)
         edited-source (edit-source source)]
     (println xmlns)
     root))
@@ -40,3 +34,13 @@
 (println (xml/indent-str (read-xliff "test-bad.xliff")))
 
 
+(let [input (clojure.java.io/reader (clojure.java.io/resource "test.xliff"))
+      root (zip/xml-zip (xml/parse input))
+      xmlns (xml/find-xmlns root)
+      source (zip-xml/xml1-> root
+                            clojure.data.zip/descendants
+                            (zip-xml/attr= :lang "EN-US"))
+      edited-source (edit-source source)
+      new-root (zip/root edited-source)]
+  (println (xml/indent-str new-root))
+    true)
