@@ -38,9 +38,10 @@
       root (zip/xml-zip (xml/parse input))
       xmlns (xml/find-xmlns root)
       source (zip-xml/xml1-> root
-                            clojure.data.zip/descendants
+                             clojure.data.zip/descendants
                             (zip-xml/attr= :lang "EN-US"))
+      is-test (= "source" (.getLocalPart (:tag (first source))))
       edited-source (edit-source source)
       new-root (zip/root edited-source)]
   (println (xml/indent-str new-root))
-    true)
+    is-test)
