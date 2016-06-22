@@ -18,6 +18,21 @@
             (recur (zip/next new-loc))))
         (recur (zip/next loc))))))
 
+(defn plain-xml-printer
+  [zipper]
+  (loop [loc (zip/down zipper) ; start at first child
+         plaintext-parts []]
+    (if (or (nil? loc) (zip/end? loc))
+      (do
+        (println (apply str plaintext-parts))
+        (apply str plaintext-parts))
+      (let [node (zip/node loc)]
+        (if (string? node)
+          (recur (zip/next loc) (conj plaintext-parts node))
+          (do
+            (println "not a string: " node)
+            (recur (zip/next loc) (conj plaintext-parts "<" (.getLocalPart (:tag node)) ">" (plain-xml-printer loc) "</" (.getLocalPart (:tag node)) ">"))))))))
+
 (defn search-by-tag
   [namespace name]
   (fn [loc]
@@ -30,11 +45,17 @@
     (when-let [tag (:tag (zip/node loc))]
       (= (.getLocalPart tag) name))))
 
+(defn text
+  "Returns the textual contents of the given location, similar to
+  xpaths's value-of"
+  [loc]
+  (clojure.string/replace (apply str (zip-xml/xml-> loc clojure.data.zip/descendants zip/node string?))
+                  (re-pattern (str "[\\s" (char 160) "]+"))
+                  " "))
+
 (defn edit-sources
   [loc]
-  (println loc)
-  (let [old-content (zip-xml/text (zip/xml-zip loc))] ;;this isn't perfect but it works. It strips out all tags, however.
-    (println old-content)
+  (let [old-content (plain-xml-printer (zip/xml-zip loc))] ;;this isn't perfect but it works. It strips out all tags, however.
     (assoc-in loc [:content] (str "edited..." old-content))))
 
 (defn ns-tag=

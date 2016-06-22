@@ -19,11 +19,11 @@
   </header>
   <body>
    <trans-unit id="1" maxbytes="14">
-    <source xml:lang="EN-US">Quetzal<x/> doing it</source>
+    <source xml:lang="EN-US">Quetzal<x/>doing it</source>
     <target xml:lang="JA-JP">Quetzal</target>
    </trans-unit>
    <trans-unit id="3" maxbytes="114">
-    <source xml:lang="EN-US">An application to manipulate and 
+    <source xml:lang="EN-US">An application to <g>manipulate</g> and 
      process XLIFF documents</source>
     <target xml:lang="JA-JP">XLIFF 文書を編集、または処理
      するアプリケーションです。</target>
