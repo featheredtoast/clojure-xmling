@@ -48,7 +48,7 @@
 (defn edit-sources
   [loc]
   (let [old-content (plain-xml-printer (zip/xml-zip loc))] ;;this isn't perfect but it works. It strips out all tags, however.
-    (assoc-in loc [:content] (str "edited..." old-content))))
+    (assoc-in loc [:content] (conj (:content loc) "edited.."))))
 
 (defn ns-tag=
   "Returns a query predicate that matches a node when its is a tag
