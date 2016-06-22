@@ -45,14 +45,6 @@
     (when-let [tag (:tag (zip/node loc))]
       (= (.getLocalPart tag) name))))
 
-(defn text
-  "Returns the textual contents of the given location, similar to
-  xpaths's value-of"
-  [loc]
-  (clojure.string/replace (apply str (zip-xml/xml-> loc clojure.data.zip/descendants zip/node string?))
-                  (re-pattern (str "[\\s" (char 160) "]+"))
-                  " "))
-
 (defn edit-sources
   [loc]
   (let [old-content (plain-xml-printer (zip/xml-zip loc))] ;;this isn't perfect but it works. It strips out all tags, however.
